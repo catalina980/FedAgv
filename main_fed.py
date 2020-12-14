@@ -79,6 +79,7 @@ if __name__ == '__main__':
         if not args.all_clients:
             w_locals = []
         m = max(int(args.frac * args.num_users), 1)
+        # 每轮被选参与联邦学习的用户
         idxs_users = np.random.choice(range(args.num_users), m, replace=False)
         for idx in idxs_users:
             local = LocalUpdate(args=args, dataset=dataset_train, idxs=dict_users[idx])
@@ -110,5 +111,7 @@ if __name__ == '__main__':
     acc_train, loss_train = test_img(net_glob, dataset_train, args)
     acc_test, loss_test = test_img(net_glob, dataset_test, args)
     print("Training accuracy: {:.2f}".format(acc_train))
+    print("Training loss: {:.2f}".format(loss_train))
     print("Testing accuracy: {:.2f}".format(acc_test))
+    print("Testing loss: {:.2f}".format(loss_test))
 

@@ -10,7 +10,10 @@ def args_parser():
     parser.add_argument('--epochs', type=int, default=10, help="rounds of training")
     parser.add_argument('--num_users', type=int, default=100, help="number of users: K")
     parser.add_argument('--frac', type=float, default=0.1, help="the fraction of clients: C")
+    # 每次参与联邦聚合的clients数量占client总数的比例。C=1 代表所有成员参与聚合
+    # 100个人只有十个参与本地训练，进行参数更新
     parser.add_argument('--local_ep', type=int, default=5, help="the number of local epochs: E")
+    # 用户本地训练的轮数
     parser.add_argument('--local_bs', type=int, default=10, help="local batch size: B")
     parser.add_argument('--bs', type=int, default=128, help="test batch size")
     parser.add_argument('--lr', type=float, default=0.01, help="learning rate")
@@ -30,6 +33,10 @@ def args_parser():
     # other arguments
     parser.add_argument('--dataset', type=str, default='mnist', help="name of dataset")
     parser.add_argument('--iid', action='store_true', help='whether i.i.d or not')
+    # 是否随机采样 iid 是独立同分布
+    # 默认不填，是非独立同分布
+    # 独立同分布是，60000个数据，100个用户，随机分配600个
+    # 非独立同分布是 根据数据集标签排序，将其划分为200个大小都为300的切片，每个用户分配两个切片
     parser.add_argument('--num_classes', type=int, default=10, help="number of classes")
     parser.add_argument('--num_channels', type=int, default=3, help="number of channels of imges")
     parser.add_argument('--gpu', type=int, default=0, help="GPU ID, -1 for CPU")
